@@ -36,6 +36,6 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> findByName(String name) {
-        return null;
+        return productDAO.findByName(name);
     }
 }

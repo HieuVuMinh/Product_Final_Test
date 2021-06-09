@@ -5,6 +5,8 @@
   Time: 3:00 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -194,6 +196,120 @@
             opacity: 0;
             visibility: hidden;
         }
+        /*select option*/
+        details {
+            position: relative;
+            width: 300px;
+            margin-right: 1rem;
+        }
+
+        details[open] {
+            z-index: 1;
+        }
+
+        summary {
+            padding: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #efefef;
+            list-style: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details[open] summary:before {
+            content: '';
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        summary:after {
+            content: '';
+            display: inline-block;
+            float: right;
+            width: .5rem;
+            height: .5rem;
+            border-bottom: 1px solid currentColor;
+            border-left: 1px solid currentColor;
+            border-bottom-left-radius: 2px;
+            transform: rotate(45deg) translate(50%, 0%);
+            transform-origin: center center;
+            transition: transform ease-in-out 100ms
+        }
+
+        summary:focus {
+            outline: none;
+        }
+
+        details[open] summary:after {
+            transform: rotate(-45deg) translate(0%, 0%);
+        }
+
+        ul.list {
+            width: 100%;
+            background: #ddd;
+            position: absolute;
+            top: calc(100% + .5rem);
+            left: 0;
+            padding: 1rem;
+            margin: 0;
+            box-sizing: border-box;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        li.list {
+            margin: 0;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        li.list:first-child {
+            padding-top: 0;
+        }
+
+        li.list:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        summary.radios {
+            counter-reset: radios;
+        }
+
+        input[type=radio] {
+            counter-increment: radios;
+            appearance: none;
+            display: none;
+        }
+
+        input[type=radio]:checked {
+            display: inline;
+        }
+
+        input[type=radio]:after {
+            content: attr(title);
+            display: inline;
+            font-size: 1rem;
+        }
+
+        ul.list {
+            counter-reset: labels;
+        }
+
+        label {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -204,20 +320,49 @@
     <form method="post">
         <div id="body">
             <div class="form__group field">
-                <input type="input" class="form__field" placeholder="Name" name="name" id='name' value="${requestScope["product"].getNameProduct()}"/>
+                <input type="input" class="form__field" placeholder="Id" name="id" id='id' value="${requestScope["product"].getIdPr()}" required/>
+                <label for="id" class="form__label">Id</label>
+            </div>
+            <div class="form__group field">
+                <input type="input" class="form__field" placeholder="Name" name="name" id='name' value="${requestScope["product"].getNameProduct()}" required/>
                 <label for="name" class="form__label">Name</label>
             </div>
             <div class="form__group field">
-                <input type="input" class="form__field" placeholder="Price" name="price" id='price' value="${requestScope["product"].getPricePr()}"/>
+                <input type="number" class="form__field" placeholder="Price" name="price" id='price' value="${requestScope["product"].getPricePr()}" required/>
                 <label for="price" class="form__label">Price</label>
             </div>
             <div class="form__group field">
-                <input type="input" class="form__field" placeholder="Description" name="description" id='description' value="${requestScope["product"].getDescriptionPr()}"/>
-                <label for="description" class="form__label">Description</label>
+                <input type="number" class="form__field" placeholder="Quantity" name="quantity" id='quantity' value="${requestScope["product"].getQuantityPr()}"
+                       required/>
+                <label for="quantity" class="form__label">Quantity</label>
             </div>
             <div class="form__group field">
-                <input type="input" class="form__field" placeholder="Producer" name="producer" id='producer' value="${requestScope["product"].getProducerPr()}"/>
-                <label for="producer" class="form__label">Producer</label>
+                <input type="input" class="form__field" placeholder="Color" name="color" id='color' value="${requestScope["product"].getColorPr()}" required/>
+                <label for="color" class="form__label">Color</label>
+            </div>
+            <div class="form__group field">
+                <input type="input" class="form__field" placeholder="Description" name="description" id='description' value="${requestScope["product"].getDescriptionPr()}" required/>
+                <label for="description" class="form__label">Description</label>
+            </div>
+
+            <div class="form__group field">
+<%--                <details class="custom-select" style="width: 217px">--%>
+<%--                    <summary class="radios" style="width: 417px; height: auto; background-color: #dcdcdc; ">--%>
+<%--                        <input type="radio" name="category" id="default" title="Category" style=" font-style: inherit"  checked>--%>
+<%--                        <c:forEach items='${requestScope["category"]}' var="category">--%>
+<%--                            <input type="radio" name="category" id="${category.getId()}" title="${category.getName()}" value=""${requestScope["category"].getName()}"" >--%>
+<%--                        </c:forEach>--%>
+<%--                    </summary>--%>
+<%--                    <ul class="list" style="list-style: none; font-size: 19px">--%>
+<%--                        <c:forEach items='${requestScope["category"]}' var="category">--%>
+<%--                            <li>--%>
+<%--                                <label for="${category.getId()}">${category.getName()}</label>--%>
+<%--                            </li>--%>
+<%--                        </c:forEach>--%>
+<%--                    </ul>--%>
+<%--                </details>--%>
+                <input type="number" class="form__field" placeholder="Category" name="category" id='category' value="${requestScope["product"].getCategoryPr()}" required/>
+                <label for="category" class="form__label">Category</label>
             </div>
 
 

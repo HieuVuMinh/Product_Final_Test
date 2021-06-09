@@ -70,7 +70,7 @@
         }
 
         .col-1 {
-            width: 18%;
+            width: 12%;
         }
 
         .col-2 {
@@ -78,7 +78,7 @@
         }
 
         .col-3 {
-            width: 15%;
+            width: 10%;
         }
 
         .col-4 {
@@ -90,6 +90,9 @@
         }
 
         .col-6 {
+            width: 9%;
+        }
+        .col-7 {
             width: 9%;
         }
 
@@ -167,9 +170,9 @@
         <h1><b>Danh sách Sản Phẩm</b></h1>
     </div>
 <%--    search--%>
-    <form name="search">
-        <div class="box">
-            <div class="box-1">
+    <form name="search" >
+        <div class="box" style="margin-left: 40px ">
+            <div class="box-1" >
                 <span class="icon"><i class="fa fa-search"></i></span>
                 <input type="search" name="search" id="search1" placeholder="Search..."/>
             </div>
@@ -194,40 +197,46 @@
                 Giá Sản Phẩm
             </div>
             <div class="col-3">
-                Mô Tả
+                Số Lượng
             </div>
             <div class="col-4">
-                Nhà Sản Xuất
+                Màu Sắc
             </div>
             <div class="col-5">
-                Chỉnh Sửa
+                Danh Mục
             </div>
             <div class="col-6">
+                Chỉnh Sửa
+            </div>
+            <div class="col-7">
                 Xóa
             </div>
         </div>
         <hr width="100%" align="center"/>
         <c:forEach items='${requestScope["products"]}' var="product">
             <div>
-                <div class="col-0">
+                <div class="col-0" style="height: 40px">
                     ${product.getIdPr()}
                 </div>
-                <div class="col-1">
+                <div class="col-1" style="height: 40px">
                     <a href="/products?action=view&id=${product.getIdPr()}" style="text-decoration: none">${product.getNameProduct()}</a>
                 </div>
-                <div class="col-2">
+                <div class="col-2" style="height: 40px">
                     ${product.getPricePr()} USD
                 </div>
-                <div class="col-3">
-                    ${product.getDescriptionPr()}
+                <div class="col-3" style="height: 40px">
+                    ${product.getQuantityPr()}
                 </div>
-                <div class="col-4">
-                    ${product.getProducerPr()}
+                <div class="col-4" style="height: 40px">
+                    ${product.getColorPr()}
                 </div>
-                <div class="col-5">
+                <div class="col-5" style="height: 40px">
+                    ${product.getCategoryPr()}
+                </div>
+                <div class="col-6" style="height: 40px">
                     <a href="/products?action=edit&id=${product.idPr}" style="text-decoration: none">Chỉnh Sửa</a>
                 </div>
-                <div class="col-6">
+                <div class="col-7" style="height: 40px">
                     <a href="/products?action=delete&id=${product.idPr}" style="text-decoration: none">Xóa</a>
                 </div>
             </div>

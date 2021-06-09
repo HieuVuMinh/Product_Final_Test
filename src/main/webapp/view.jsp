@@ -200,13 +200,17 @@
                 Giá Sản Phẩm
             </div>
             <div class="col-3">
-                Mô Tả
+                Số Lượng
             </div>
             <div class="col-4">
-                Nhà Sản Xuất
+                Màu Sắc
+            </div>
+            <div class="col-5">
+                Thể Loại
             </div>
         </div>
         <hr width="100%" align="center"/>
+        <c:forEach items='${requestScope["product"]}' var="product">
             <div>
                 <div class="col-0">
                         ${product.getIdPr()}
@@ -218,12 +222,16 @@
                         ${product.getPricePr()} USD
                 </div>
                 <div class="col-3">
-                        ${product.getDescriptionPr()}
+                        ${product.getQuantityPr()}
                 </div>
                 <div class="col-4">
-                        ${product.getProducerPr()}
+                        ${product.getColorPr()}
+                </div>
+                <div class="col-4">
+                        ${product.getCategoryPr()}
                 </div>
             </div>
+        </c:forEach>
     </div>
 </div>
 </body>

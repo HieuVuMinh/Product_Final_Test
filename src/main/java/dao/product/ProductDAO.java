@@ -13,6 +13,7 @@ import java.util.List;
 public class ProductDAO implements IProductDAO{
     public static final String SELECT_ALL_PRODUCT = "select * from product";
     public static final String SELECT_BOOK_BY_ID = "select * from product where ProductId = ?";;
+    public static final String SELECT_PRODUCT_BY_NAME = "select * from product where ProductName like ?";;
     public static final String INSERT_BOOK = "insert into product (ProductName, ProductPrice, ProductQuantity, ProductColor, ProductDescription, CategoryId) value (? , ?, ?, ?, ?, ?)";
     private static final String UPDATE_PRODUCT = "update product set ProductName = ?, ProductPrice = ?, ProductQuantity = ?, ProductColor = ?, ProductDescription = ?, CategoryId = ? WHERE ProductId = ?";
     private static final String DELETE_PRODUCT = "delete from product where ProductId = ?";
@@ -50,12 +51,14 @@ public class ProductDAO implements IProductDAO{
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
+                int id1 = resultSet.getInt("ProductId");
                 String name = resultSet.getString("ProductName");
                 double price = resultSet.getDouble("ProductPrice");
                 int quantity = resultSet.getInt("ProductQuantity");
                 String color = resultSet.getString("ProductColor");
                 String description = resultSet.getString("ProductDescription");
                 int category = resultSet.getInt("CategoryId");
+                product.setIdPr(id1);
                 product.setNameProduct(name);
                 product.setPricePr(price);
                 product.setQuantityPr(quantity);
@@ -125,6 +128,25 @@ public class ProductDAO implements IProductDAO{
 
     @Override
     public List<Product> findByName(String name) {
-        return null;
+        List<Product> productList = new ArrayList<>();
+        Connection connection = SQLConnection.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUCT_BY_NAME);
+            preparedStatement.setString(1, "%" + name + "%" );
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("ProductId");
+                String name1 = resultSet.getString("ProductName");
+                double price = resultSet.getDouble("ProductPrice");
+                int quantity = resultSet.getInt("ProductQuantity");
+                String color = resultSet.getString("ProductColor");
+                String description = resultSet.getString("ProductDescription");
+                int category = resultSet.getInt("CategoryId");
+                productList.add(new Product(id,name1,price,quantity,color, description, category));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
     }
 }
